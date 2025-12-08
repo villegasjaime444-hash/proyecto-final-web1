@@ -113,7 +113,7 @@ nav a:hover {
 .banner-bienvenida button:hover {
     background: var(--cobre-oscuro);
 }
-  /* MÉTRICAS*/
+  /* Metricas*/
 .metricas {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -196,6 +196,9 @@ nav a:hover {
     color: #fff;
     font-weight: bold;
 }
+.juego {
+    transition: 0.3s ease;
+}
 /*RESPONSIVIDAD*/
 /* Tablets */
 @media (max-width: 900px) {
@@ -235,63 +238,55 @@ nav a:hover {
         flex-direction: column;
     }
 }
-/* MENÚ HAMBURGUESA*/
-.menu-hamburguesa{
-    display:none;
-    font-size:30px;
-    cursor:pointer;
-    color:var(--cobre);
+/* ============================= */
+/* MENÚ HAMBURGUESA RESPONSIVO */
+/* ============================= */
+
+.hamburguesa {
+    display: none;
+    font-size: 32px;
+    cursor: pointer;
+    color: white;
 }
-@media (max-width: 700px){
-    nav{
-        display:none;
-        flex-direction:column;
-        background:var(--fondo-sec);
-        position:absolute;
-        top:70px;
-        left:0;
-        width:100%;
-        padding:20px;
+
+/* MÓVILES */
+@media (max-width: 800px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
     }
 
-    nav.active{
-        display:flex;
+    .hamburguesa {
+        display: block;
+        position: absolute;
+        top: 22px;
+        right: 20px;
+        z-index: 999;
     }
 
-    .menu-hamburguesa{
-        display:block;
+    nav {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background: #1a1a1a;
+        margin-top: 15px;
+        border-top: 1px solid #c17f41;
+    }
+
+    nav a {
+        padding: 15px;
+        border-bottom: 1px solid #8c5524;
+    }
+
+    nav.activo {
+        display: flex;
+    }
+
+    .acciones {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 15px;
     }
 }
-/*SLIDER */
-.slider{
-    position:relative;
-    height:300px;
-    overflow:hidden;
-}
-
-.slider img{
-    width:100%;
-    height:300px;
-    object-fit:cover;
-    display:none;
-}
-
-.slider img.active{
-    display:block;
-}
-
-.prev, .next{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    background:var(--cobre);
-    border:none;
-    padding:10px 15px;
-    cursor:pointer;
-    font-size:20px;
-    color:white;
-}
-
-.prev{ left:10px; }
-.next{ right:10px; }
-

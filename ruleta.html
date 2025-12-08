@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sala Ruleta</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        body {
+            background: radial-gradient(circle, #222, #000);
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .sala {
+            margin-top: 40px;
+        }
+
+        .saldo {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .fichas button {
+            margin: 10px;
+            padding: 15px 25px;
+            border-radius: 50%;
+            font-size: 18px;
+            background: gold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .apuesta {
+            margin: 20px;
+            font-size: 20px;
+        }
+
+        .btn-apostar {
+            padding: 15px 30px;
+            background: green;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .resultado {
+            margin-top: 30px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>SALA DE RULETA 🎰</h1>
+
+<div class="sala">
+
+    <div class="saldo">
+        Saldo: $<span id="saldo">2500</span>
+    </div>
+
+    <div class="apuesta">
+        Apuesta actual: $<span id="apuesta">0</span>
+    </div>
+
+    <div class="fichas">
+        <button onclick="agregarApuesta(50)">$50</button>
+        <button onclick="agregarApuesta(100)">$100</button>
+        <button onclick="agregarApuesta(500)">$500</button>
+    </div>
+
+    <button class="btn-apostar" onclick="apostar()">APOSTAR</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <br><br>
+    <a href="Index.html">⬅ Volver al casino</a>
+
+</div>
+
+<script>
+let saldo = 2500;
+let apuesta = 0;
+
+function agregarApuesta(monto) {
+    if (saldo >= monto) {
+        apuesta += monto;
+        saldo -= monto;
+        actualizarPantalla();
+    } else {
+        alert("Saldo insuficiente");
+    }
+}
+
+function apostar() {
+    if (apuesta === 0) {
+        alert("Debes apostar primero");
+        return;
+    }
+
+    const gana = Math.random() > 0.5;
+
+    if (gana) {
+        const premio = apuesta * 2;
+        saldo += premio;
+        document.getElementById("resultado").textContent = 
+            "🎉 ¡Ganaste $" + premio + "!";
+    } else {
+        document.getElementById("resultado").textContent = 
+            "❌ Perdiste $" + apuesta;
+    }
+
+    apuesta = 0;
+    actualizarPantalla();
+}
+
+function actualizarPantalla() {
+    document.getElementById("saldo").textContent = saldo;
+    document.getElementById("apuesta").textContent = apuesta;
+}
+</script>
+
+</body>
+</html>
