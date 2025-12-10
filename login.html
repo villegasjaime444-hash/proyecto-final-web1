@@ -64,10 +64,11 @@ function registro() {
         return;
     }
 
+    // Guardar usuario
     const jugador = {
         nombre: usuario,
-        password: password,
-        saldo: 2500,
+        password: password,  // Guarda la contraseña
+        saldo: 0,
         partidas: 0,
         ganadas: 0,
         perdidas: 0,
@@ -75,6 +76,8 @@ function registro() {
     };
 
     localStorage.setItem("jugador", JSON.stringify(jugador));
+
+    alert("Registro exitoso. Bienvenido " + usuario);
     window.location.href = "index.html";
 }
 

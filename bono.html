@@ -2,21 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bono</title>
+    <title>Bono de Bienvenida</title>
     <link rel="stylesheet" href="CSS/style.css">
+
+    <style>
+        body {
+            background:#111;
+            color:white;
+            font-family:Arial, sans-serif;
+            text-align:center;
+        }
+
+        .tarjeta-bono {
+            border:2px solid #c17f41;
+            border-radius:15px;
+            padding:30px;
+            max-width:400px;
+            margin:40px auto;
+            background:#1b1b1b;
+        }
+
+        .tarjeta-bono h2 {
+            color:#ffd700;
+        }
+
+        .tarjeta-bono ul {
+            text-align:left;
+            margin-top:15px;
+        }
+
+        .tarjeta-bono li {
+            margin:8px 0;
+        }
+
+        .btn-bono {
+            display:inline-block;
+            margin-top:20px;
+            padding:12px 30px;
+            background:#c17f41;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-weight:bold;
+        }
+
+        .btn-bono:hover {
+            opacity:0.85;
+        }
+    </style>
 </head>
 <body>
-
 <header>
     <div class="logo">Casino Royal</div>
 </header>
-
-<main style="padding:40px; text-align:center;">
-    <h1>PÁGINA EN CONSTRUCCIÓN</h1>
-    <p>Aquí irá el contenido de esta sección</p>
+<main style="padding:40px;">
+    <h1>🎁 BONO DE BIENVENIDA</h1>
+    <p>Duplica tu primer depósito y comienza a ganar</p>
+    <div class="tarjeta-bono">
+        <h2>100% de BONO</h2>
+        <p>En tu primer depósito</p>
+        <h3>💰 Ejemplo:</h3>
+        <p>Depositas <strong>$10.000</strong> → Juegas con <strong>$20.000</strong></p>
+        <ul>
+            <li>✅ Bono válido solo una vez</li>
+            <li>✅ Solo para nuevos jugadores</li>
+            <li>✅ Sin dinero real (modo demo)</li>
+            <li>✅ Válido para ruleta y slots</li>
+        </ul>
+        <a href="depositar.html" class="btn-bono">Activar Bono</a>
+    </div>
     <br>
-    <a href="Index.html" style="color:#c17f41;">⬅ Volver al Casino</a>
+    <a href="Index.html" style="color:#c17f41; font-size:18px;">⬅ Volver al Casino</a>
 </main>
-
 </body>
 </html>

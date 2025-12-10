@@ -106,22 +106,3 @@ if (btnPerfil) {
     });
 }
 
-// CERRAR SESIÓN
-
-function cerrarSesion() {
-    const jugador = JSON.parse(localStorage.getItem("jugador"));
-    jugador.logeado = false;
-    localStorage.setItem("jugador", JSON.stringify(jugador));
-    window.location.href = "login.html";
-}
-
-// MENÚ HAMBURGUESA FUNCIONAL
-
-const hamburguesa = document.getElementById("hamburguesa");
-const menu = document.getElementById("menu");
-
-if (hamburguesa && menu) {
-    hamburguesa.addEventListener("click", () => {
-        menu.classList.toggle("activo");
-    });
-}

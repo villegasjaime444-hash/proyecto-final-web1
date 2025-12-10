@@ -59,26 +59,6 @@
     <a href="Index.html" style="color:#c17f41;">⬅ Volver</a>
 </div>
 
-<script>
-const jugador = JSON.parse(localStorage.getItem("jugador"));
-
-document.getElementById("nombre").textContent = jugador.nombre;
-document.getElementById("saldo").textContent = jugador.saldo;
-document.getElementById("partidas").textContent = jugador.partidas;
-document.getElementById("ganadas").textContent = jugador.ganadas;
-document.getElementById("perdidas").textContent = jugador.perdidas;
-
-function actualizarPerfil() {
-    const nuevoNombre = document.getElementById("nuevoNombre").value;
-
-    if (nuevoNombre !== "") {
-        jugador.nombre = nuevoNombre;
-        localStorage.setItem("jugador", JSON.stringify(jugador));
-        document.getElementById("nombre").textContent = nuevoNombre;
-        alert("Nombre actualizado");
-    }
-}
-</script>
 
 </body>
 </html>

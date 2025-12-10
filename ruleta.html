@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Sala Ruleta</title>
-    <link rel="stylesheet" href="CSS/style.css">
     <style>
         body {
             background: radial-gradient(circle, #222, #000);
@@ -12,115 +11,165 @@
             text-align: center;
         }
 
-        .sala {
-            margin-top: 40px;
+        h1 {
+            margin-top: 20px;
         }
 
-        .saldo {
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .fichas button {
-            margin: 10px;
-            padding: 15px 25px;
+        .ruleta {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
             border-radius: 50%;
-            font-size: 18px;
-            background: gold;
-            border: none;
-            cursor: pointer;
+            border: 8px solid gold;
+            background: url("https://i.imgur.com/4rWq7R3.png");
+            background-size: cover;
+            transition: transform 4s cubic-bezier(.17,.67,.55,1.38);
         }
 
-        .apuesta {
-            margin: 20px;
+        .panel {
+            margin-top: 20px;
             font-size: 20px;
         }
 
-        .btn-apostar {
-            padding: 15px 30px;
+        .panel input, .panel select {
+            padding: 8px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 18px;
             background: green;
             color: white;
             border: none;
-            font-size: 18px;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #0a0;
         }
 
         .resultado {
-            margin-top: 30px;
-            font-size: 22px;
+            margin-top: 25px;
+            font-size: 24px;
+            font-weight: bold;
         }
+
+        a { color: gold; text-decoration: none; }
     </style>
 </head>
 
 <body>
 
-<h1>SALA DE RULETA 🎰</h1>
+<h1>🎰 RULETA INTERACTIVA</h1>
 
-<div class="sala">
+<div class="panel">
+    <p>Saldo: BS<span id="saldo">0</span></p>
 
-    <div class="saldo">
-        Saldo: $<span id="saldo">2500</span>
-    </div>
+    <label>Apuesta:</label>
+    <input type="number" id="apuesta" min="10" value="50">
 
-    <div class="apuesta">
-        Apuesta actual: $<span id="apuesta">0</span>
-    </div>
+    <br>
 
-    <div class="fichas">
-        <button onclick="agregarApuesta(50)">$50</button>
-        <button onclick="agregarApuesta(100)">$100</button>
-        <button onclick="agregarApuesta(500)">$500</button>
-    </div>
+    <label>Tipo de apuesta:</label>
+    <select id="tipo">
+        <option value="numero">Número (0-36)</option>
+        <option value="rojo">Rojo</option>
+        <option value="negro">Negro</option>
+        <option value="par">Par</option>
+        <option value="impar">Impar</option>
+    </select>
 
-    <button class="btn-apostar" onclick="apostar()">APOSTAR</button>
-
-    <div class="resultado" id="resultado"></div>
-
-    <br><br>
-    <a href="Index.html">⬅ Volver al casino</a>
-
+    <input type="number" id="num" placeholder="Número" min="0" max="36" style="display:none;">
 </div>
 
+<div class="ruleta" id="ruleta"></div>
+
+<button class="btn" onclick="girar()">GIRAR RULETA</button>
+
+<div class="resultado" id="resultado"></div>
+
+<br>
+<a href="Index.html">⬅ Volver al casino</a>
+
 <script>
+// Colores reales de ruleta
+const rojos = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+
 let saldo = 2500;
-let apuesta = 0;
 
-function agregarApuesta(monto) {
-    if (saldo >= monto) {
-        apuesta += monto;
-        saldo -= monto;
-        actualizarPantalla();
-    } else {
-        alert("Saldo insuficiente");
-    }
-}
+// Mostrar campo NUM dependiendo de la apuesta
+document.getElementById("tipo").addEventListener("change", () => {
+    document.getElementById("num").style.display =
+        document.getElementById("tipo").value === "numero" ? "inline-block" : "none";
+});
 
-function apostar() {
-    if (apuesta === 0) {
-        alert("Debes apostar primero");
+// Giro y lógica del juego
+function girar() {
+    const apuesta = parseInt(document.getElementById("apuesta").value);
+    const tipo = document.getElementById("tipo").value;
+    const numeroElegido = parseInt(document.getElementById("num").value);
+
+    if (apuesta < 10 || apuesta > saldo) {
+        alert("Apuesta inválida");
         return;
     }
 
-    const gana = Math.random() > 0.5;
+    saldo -= apuesta;
+    document.getElementById("saldo").textContent = saldo;
 
-    if (gana) {
-        const premio = apuesta * 2;
-        saldo += premio;
-        document.getElementById("resultado").textContent = 
-            "🎉 ¡Ganaste $" + premio + "!";
-    } else {
-        document.getElementById("resultado").textContent = 
-            "❌ Perdiste $" + apuesta;
-    }
+    // ANIIMACIÓN
+    const ruleta = document.getElementById("ruleta");
+    const giro = 360 * 8 + Math.floor(Math.random() * 360); // Gira 8 vueltas + ángulo final
+    ruleta.style.transform = `rotate(${giro}deg)`;
 
-    apuesta = 0;
-    actualizarPantalla();
+    // Número ganador
+    const numeroGanador = Math.floor(Math.random() * 37);
+
+    setTimeout(() => {
+        evaluarResultado(numeroGanador, tipo, numeroElegido, apuesta);
+    }, 4000);
 }
 
-function actualizarPantalla() {
+function evaluarResultado(n, tipo, num, apuesta) {
+    let color = rojos.includes(n) ? "rojo" : n === 0 ? "verde" : "negro";
+    let gano = false;
+    let premio = 0;
+
+    // Lógica de apuestas
+    if (tipo === "numero" && n === num) {
+        premio = apuesta * 36;
+        gano = true;
+    }
+    if (tipo === "rojo" && color === "rojo") {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "negro" && color === "negro") {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "par" && n !== 0 && n % 2 === 0) {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "impar" && n % 2 === 1) {
+        premio = apuesta * 2;
+        gano = true;
+    }
+
+    if (gano) {
+        saldo += premio;
+        document.getElementById("resultado").innerHTML =
+            `🎉 Número ganador: <b>${n}</b> (${color})<br>Ganaste $${premio}!`;
+    } else {
+        document.getElementById("resultado").innerHTML =
+            `❌ Número ganador: <b>${n}</b> (${color})<br>Perdiste $${apuesta}`;
+    }
+
     document.getElementById("saldo").textContent = saldo;
-    document.getElementById("apuesta").textContent = apuesta;
 }
 </script>
 
