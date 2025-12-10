@@ -78,23 +78,7 @@ nav a:hover {
     transition: 0.3s;
 }
 
-.depositar:hover {
-    background: var(--cobre-oscuro);
-}
 
-.usuario {
-    padding: 8px 14px;
-    background: var(--fondo);
-    border: 1px solid var(--cobre);
-    border-radius: 6px;
-    cursor: pointer;
-}
-   /*BANNER*/
-.banner-bienvenida {
-    text-align: center;
-    padding: 60px 20px;
-    background: linear-gradient(180deg, #2d1b0f, #0d0d0d);
-}
 .banner-bienvenida h1 {
     font-size: 42px;
     color: var(--cobre-claro);
