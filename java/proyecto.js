@@ -45,10 +45,10 @@ document.querySelectorAll("nav a").forEach(link => {
 
         const seccion = link.textContent.trim();
 
-        if (seccion === "Casino") window.location.href = "index.html";
-        if (seccion === "Deportes") window.location.href = "deportes.html";
-        if (seccion === "En Vivo") window.location.href = "envivo.html";
-        if (seccion === "Promociones") window.location.href = "promociones.html";
+        if (seccion === "Casino.") window.location.href = "index.html";
+        if (seccion === "Deportes.") window.location.href = "deportes.html";
+        if (seccion === "En Vivo.") window.location.href = "envivo.html";
+        if (seccion === "Promociones.") window.location.href = "promociones.html";
     });
 });
 
@@ -106,3 +106,22 @@ if (btnPerfil) {
     });
 }
 
+// CERRAR SESIÓN
+
+function cerrarSesion() {
+    const jugador = JSON.parse(localStorage.getItem("jugador"));
+    jugador.logeado = false;
+    localStorage.setItem("jugador", JSON.stringify(jugador));
+    window.location.href = "login.html";
+}
+
+// MENÚ HAMBURGUESA FUNCIONAL
+
+const hamburguesa = document.getElementById("hamburguesa");
+const menu = document.getElementById("menu");
+
+if (hamburguesa && menu) {
+    hamburguesa.addEventListener("click", () => {
+        menu.classList.toggle("activo");
+    });
+}
