@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Casino Royal</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(193,127,65,.4);
+        }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            background: #c17f41;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        a {
+            color: #c17f41;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login">
+    <h2>Casino Royal</h2>
+
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+
+    <button onclick="login()">Iniciar Sesión</button>
+    <button onclick="registro()">Registrarse</button>
+
+    <p id="mensaje"></p>
+</div>
+
+<script>
+function registro() {
+    const usuario = document.getElementById("usuario").value;
+    const password = document.getElementById("password").value;
+
+    if (!usuario || !password) {
+        alert("Completa todos los campos");
+        return;
+    }
+
+    // Guardar usuario
+    const jugador = {
+        nombre: usuario,
+        password: password,  // Guarda la contraseña
+        saldo: 0,
+        partidas: 0,
+        ganadas: 0,
+        perdidas: 0,
+        logeado: true
+    };
+
+
+</body>
+</html>
