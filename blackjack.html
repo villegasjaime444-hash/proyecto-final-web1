@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Blackjack en Vivo</title>
+<link rel="stylesheet" href="CSS/style.css">
+
+<style>
+    body {
+        background: #0b0b0b;
+        color: white;
+        text-align: center;
+        font-family: Arial;
+    }
+
+    .mesa {
+        max-width: 900px;
+        margin: auto;
+        background: #0b3d2e;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px black;
+    }
+
+    .cartas {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        min-height: 160px;
+    }
+
+    .carta {
+        width: 110px;
+        border-radius: 8px;
+        transition: transform 0.4s ease, opacity 0.4s;
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    .carta.mostrada {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .botones button {
+        background: #c17f41;
+        border: none;
+        font-size: 18px;
+        color: white;
+        padding: 12px 25px;
+        margin: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .botones button:hover {
+        background: #e5a86f;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Casino Royal</div>
+</header>
+
+<main style="padding:40px;">
+
+    <h1>Blackjack Profesional</h1>
+    <p id="estado">Repartiendo cartas...</p>
+
+    <div class="mesa">
+
+        <h2>Dealer</h2>
+        <div id="cartasDealer" class="cartas"></div>
+        <p>Puntos del dealer: <span id="puntosDealer">0</span></p>
+
+        <hr>
+
+        <h2>Jugador</h2>
+        <div id="cartasJugador" class="cartas"></div>
+        <p>Tus puntos: <span id="puntosJugador">0</span></p>
+
+        <div class="botones">
+            <button onclick="pedirCarta()">Pedir Carta</button>
+            <button onclick="plantarse()">Plantarse</button>
+            <button onclick="doblar()">Doblar</button>
+            <button onclick="nueva()">Nueva Partida</button>
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+/* ======== BARAJA ======== */
+let palos = ["C", "D", "H", "S"];
+let numeros = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"];
+let mazo = [];
+
+let manoJugador = [];
+let manoDealer = [];
+
+function crearMazo() {
+    mazo = [];
+    for (let p of palos) {
+        for (let n of numeros) {
+            mazo.push(n + "-" + p);
+        }
+    }
+    mazo = mazo.sort(() => Math.random() - 0.5);
+}
+
+/* ======== VALORES ======== */
+function valorCarta(carta) {
+    let valor = carta.split("-")[0];
+    if (valor === "A") return 11;
+    if (["K","Q","J"].includes(valor)) return 10;
+    return parseInt(valor);
+}
+
+function calcularPuntos(mano) {
+    let total = 0;
+    let ases = 0;
+
+    for (let carta of mano) {
+        total += valorCarta(carta);
+        if (carta.startsWith("A")) ases++;
+    }
+    while (total > 21 && ases > 0) {
+        total -= 10;
+        ases--;
+    }
+    return total;
+}
+
+/* ======== INTERFAZ ======== */
+function mostrarCarta(carta, destino) {
+    let img = document.createElement("img");
+    img.classList.add("carta");
+    img.src = "IMG/cartas.j" + carta + ".jpg";  // EJEMPLO: "IMG/cartas/A-C.png"
+    document.getElementById(destino).appendChild(img);
+
+    setTimeout(() => img.classList.add("mostrada"), 50);
+}
+
+function actualizarPuntos() {
+    document.getElementById("puntosJugador").innerText = calcularPuntos(manoJugador);
+    document.getElementById("puntosDealer").innerText = calcularPuntos(manoDealer);
+}
+
+/* ======== REPARTO INICIAL ======== */
+function repartir() {
+    crearMazo();
+    manoJugador = [];
+    manoDealer = [];
+
+    document.getElementById("cartasJugador").innerHTML = "";
+    document.getElementById("cartasDealer").innerHTML = "";
+
+    manoJugador.push(mazo.pop());
+    manoDealer.push(mazo.pop());
+    manoJugador.push(mazo.pop());
+    manoDealer.push(mazo.pop());
+
+    mostrarCarta(manoJugador[0], "cartasJugador");
+    mostrarCarta(manoDealer[0], "cartasDealer");
+
+    setTimeout(() => mostrarCarta(manoJugador[1], "cartasJugador"), 300);
+    setTimeout(() => mostrarCarta(manoDealer[1], "cartasDealer"), 600);
+
+    setTimeout(() => {
+        actualizarPuntos();
+        document.getElementById("estado").innerText = "Tu turno...";
+    }, 900);
+}
+
+/* ======== ACCIONES ======== */
+function pedirCarta() {
+    let carta = mazo.pop();
+    manoJugador.push(carta);
+    mostrarCarta(carta, "cartasJugador");
+    actualizarPuntos();
+
+    let puntos = calcularPuntos(manoJugador);
+    if (puntos > 21) {
+        document.getElementById("estado").innerText = "Te pasaste. Pierdes.";
+    }
+}
+
+function doblar() {
+    pedirCarta();
+    plantarse();
+}
+
+function plantarse() {
+    document.getElementById("estado").innerText = "Turno del dealer...";
+
+    let interval = setInterval(() => {
+        let puntos = calcularPuntos(manoDealer);
+        if (puntos < 17) {
+            let carta = mazo.pop();
+            manoDealer.push(carta);
+            mostrarCarta(carta, "cartasDealer");
+            actualizarPuntos();
+        } else {
+            clearInterval(interval);
+            decidirGanador();
+        }
+    }, 800);
+}
+
+
+</body>
+</html>
+

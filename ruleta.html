@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sala Ruleta</title>
+    <style>
+        body {
+            background: radial-gradient(circle, #222, #000);
+            color: white;
+            font-family: Arial;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        .ruleta {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            border-radius: 50%;
+            border: 8px solid gold;
+            background: url("https://i.imgur.com/4rWq7R3.png");
+            background-size: cover;
+            transition: transform 4s cubic-bezier(.17,.67,.55,1.38);
+        }
+
+        .panel {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .panel input, .panel select {
+            padding: 8px;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #0a0;
+        }
+
+        .resultado {
+            margin-top: 25px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        a { color: gold; text-decoration: none; }
+    </style>
+</head>
+
+<body>
+
+<h1>🎰 RULETA INTERACTIVA</h1>
+
+<div class="panel">
+    <p>Saldo: BS<span id="saldo">0</span></p>
+
+    <label>Apuesta:</label>
+    <input type="number" id="apuesta" min="10" value="50">
+
+    <br>
+
+    <label>Tipo de apuesta:</label>
+    <select id="tipo">
+        <option value="numero">Número (0-36)</option>
+        <option value="rojo">Rojo</option>
+        <option value="negro">Negro</option>
+        <option value="par">Par</option>
+        <option value="impar">Impar</option>
+    </select>
+
+    <input type="number" id="num" placeholder="Número" min="0" max="36" style="display:none;">
+</div>
+
+<div class="ruleta" id="ruleta"></div>
+
+<button class="btn" onclick="girar()">GIRAR RULETA</button>
+
+<div class="resultado" id="resultado"></div>
+
+<br>
+<a href="Index.html">⬅ Volver al casino</a>
+
+<script>
+// Colores reales de ruleta
+const rojos = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
+
+let saldo = 2500;
+
+// Mostrar campo NUM dependiendo de la apuesta
+document.getElementById("tipo").addEventListener("change", () => {
+    document.getElementById("num").style.display =
+        document.getElementById("tipo").value === "numero" ? "inline-block" : "none";
+});
+
+// Giro y lógica del juego
+function girar() {
+    const apuesta = parseInt(document.getElementById("apuesta").value);
+    const tipo = document.getElementById("tipo").value;
+    const numeroElegido = parseInt(document.getElementById("num").value);
+
+    if (apuesta < 10 || apuesta > saldo) {
+        alert("Apuesta inválida");
+        return;
+    }
+
+    saldo -= apuesta;
+    document.getElementById("saldo").textContent = saldo;
+
+    // ANIIMACIÓN
+    const ruleta = document.getElementById("ruleta");
+    const giro = 360 * 8 + Math.floor(Math.random() * 360); // Gira 8 vueltas + ángulo final
+    ruleta.style.transform = `rotate(${giro}deg)`;
+
+    // Número ganador
+    const numeroGanador = Math.floor(Math.random() * 37);
+
+    setTimeout(() => {
+        evaluarResultado(numeroGanador, tipo, numeroElegido, apuesta);
+    }, 4000);
+}
+
+function evaluarResultado(n, tipo, num, apuesta) {
+    let color = rojos.includes(n) ? "rojo" : n === 0 ? "verde" : "negro";
+    let gano = false;
+    let premio = 0;
+
+    // Lógica de apuestas
+    if (tipo === "numero" && n === num) {
+        premio = apuesta * 36;
+        gano = true;
+    }
+    if (tipo === "rojo" && color === "rojo") {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "negro" && color === "negro") {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "par" && n !== 0 && n % 2 === 0) {
+        premio = apuesta * 2;
+        gano = true;
+    }
+    if (tipo === "impar" && n % 2 === 1) {
+        premio = apuesta * 2;
+        gano = true;
+    }
+
+
+</body>
+</html>
