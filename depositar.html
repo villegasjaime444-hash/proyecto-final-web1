@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -106,3 +107,93 @@ function depositar() {
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Depositar - Casino Royal</title>
+<link rel="stylesheet" href="CSS/style.css">
+<style>
+body {
+    background:#111;
+    color:white;
+    font-family:Arial, sans-serif;
+    text-align:center;
+}
+
+input[type="number"] {
+    padding:8px;
+    width:120px;
+    text-align:center;
+    margin:10px 0;
+    border-radius:6px;
+    border:none;
+}
+
+button {
+    padding:12px 25px;
+    background:#c17f41;
+    border:none;
+    border-radius:6px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.saldo {
+    font-size:20px;
+    margin:20px 0;
+    color:#ffd700;
+}
+
+.resultado {
+    font-size:18px;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Casino Royal</div>
+</header>
+
+<main style="padding:40px;">
+
+<h1>💰 Depositar - Bono de Bienvenida</h1>
+<p>Simula tu primer depósito y recibe tu bono</p>
+
+<div class="saldo">
+    Saldo actual: $<span id="saldo">0</span>
+</div>
+
+<p>Ingresa el monto a depositar:</p>
+<input type="number" id="monto" min="1" placeholder="Ej: 10000">
+
+<br>
+<div class="resultado" id="resultado"></div>
+
+<br><br>
+
+
+</main>
+<h2>Depositar Dinero</h2>
+
+<p>Saldo actual: Bs <span id="saldoActual"></span></p>
+
+<input type="number" id="monto" placeholder="Monto a depositar">
+<button onclick="depositar()">Depositar</button>
+<a href="index.html" style="color:#c17f41;">⬅ Volver al Casino</a>
+<script>
+let jugador = JSON.parse(localStorage.getItem("jugador"));
+
+document.getElementById("saldoActual").textContent = jugador.saldo;
+
+
+</body>
+</html>
+>>>>>>> 10bd46aed248ace13d6da72bc0e252eb210fe453

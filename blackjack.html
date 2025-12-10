@@ -60,6 +60,7 @@
     }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -67,7 +68,6 @@
 </header>
 
 <main style="padding:40px;">
-
     <h1>Blackjack Profesional</h1>
     <p id="estado">Repartiendo cartas...</p>
 
@@ -140,7 +140,10 @@ function calcularPuntos(mano) {
 function mostrarCarta(carta, destino) {
     let img = document.createElement("img");
     img.classList.add("carta");
-    img.src = "IMG/cartas.j" + carta + ".jpg";  // EJEMPLO: "IMG/cartas/A-C.png"
+
+    /* OJO: AQUÍ TENÍAS UN ERROR EN LA RUTA */
+    img.src = "IMG/cartas/" + carta + ".jpg";
+
     document.getElementById(destino).appendChild(img);
 
     setTimeout(() => img.classList.add("mostrada"), 50);
@@ -231,8 +234,10 @@ function nueva() {
 
 /* ======== INICIO ======== */
 window.onload = repartir;
+
 </script>
 
 </body>
 </html>
+
 
