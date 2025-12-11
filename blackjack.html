@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Blackjack en Vivo</title>
-<link rel="stylesheet" href="CSS/style.css">
 
 <style>
     body {
@@ -30,9 +29,22 @@
         min-height: 160px;
     }
 
+    /* ======== CARTAS HTML ======== */
     .carta {
-        width: 110px;
-        border-radius: 8px;
+        width: 100px;
+        height: 140px;
+        background: white;
+        border-radius: 10px;
+        border: 2px solid #ddd;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 28px;
+        font-weight: bold;
+        position: relative;
+        color: black;
+
         transition: transform 0.4s ease, opacity 0.4s;
         transform: translateY(-20px);
         opacity: 0;
@@ -43,6 +55,26 @@
         opacity: 1;
     }
 
+    .carta .sup {
+        font-size: 20px;
+        position: absolute;
+        top: 5px;
+        left: 8px;
+    }
+
+    .carta .inf {
+        font-size: 20px;
+        position: absolute;
+        bottom: 5px;
+        right: 8px;
+        transform: rotate(180deg);
+    }
+
+    .roja {
+        color: red;
+    }
+
+    /* Botones */
     .botones button {
         background: #c17f41;
         border: none;
@@ -91,11 +123,11 @@
         </div>
 
     </div>
-
+ <a href="Index.html" style="color:#c17f41; font-size:18px;">⬅ Volver al Casino</a>
 </main>
 
 <script>
-/* ======== BARAJA ======== */
+/* ========= BARAJA ========= */
 let palos = ["C", "D", "H", "S"];
 let numeros = ["A",2,3,4,5,6,7,8,9,10,"J","Q","K"];
 let mazo = [];
@@ -113,7 +145,7 @@ function crearMazo() {
     mazo = mazo.sort(() => Math.random() - 0.5);
 }
 
-/* ======== VALORES ======== */
+/* ========= VALORES ========= */
 function valorCarta(carta) {
     let valor = carta.split("-")[0];
     if (valor === "A") return 11;
@@ -136,25 +168,33 @@ function calcularPuntos(mano) {
     return total;
 }
 
-/* ======== INTERFAZ ======== */
+/* ========= CREAR CARTA HTML ========= */
+function cartaHTML(carta) {
+    let [valor, palo] = carta.split("-");
+    let simbolo = palo === "C" ? "♣" :
+                  palo === "D" ? "♦" :
+                  palo === "H" ? "♥" : "♠";
+
+    let div = document.createElement("div");
+    div.classList.add("carta");
+
+    if (palo === "H" || palo === "D") div.classList.add("roja");
+
+    div.innerHTML = `
+        <div class="sup">${valor}<br>${simbolo}</div>
+        <div style="font-size:40px;">${simbolo}</div>
+        <div class="inf">${valor}<br>${simbolo}</div>
+    `;
+    return div;
+}
+
 function mostrarCarta(carta, destino) {
-    let img = document.createElement("img");
-    img.classList.add("carta");
-
-    /* OJO: AQUÍ TENÍAS UN ERROR EN LA RUTA */
-    img.src = "IMG/cartas/" + carta + ".jpg";
-
-    document.getElementById(destino).appendChild(img);
-
-    setTimeout(() => img.classList.add("mostrada"), 50);
+    let c = cartaHTML(carta);
+    document.getElementById(destino).appendChild(c);
+    setTimeout(() => c.classList.add("mostrada"), 50);
 }
 
-function actualizarPuntos() {
-    document.getElementById("puntosJugador").innerText = calcularPuntos(manoJugador);
-    document.getElementById("puntosDealer").innerText = calcularPuntos(manoDealer);
-}
-
-/* ======== REPARTO INICIAL ======== */
+/* ========= REPARTIR ========= */
 function repartir() {
     crearMazo();
     manoJugador = [];
@@ -180,15 +220,19 @@ function repartir() {
     }, 900);
 }
 
-/* ======== ACCIONES ======== */
+function actualizarPuntos() {
+    document.getElementById("puntosJugador").innerText = calcularPuntos(manoJugador);
+    document.getElementById("puntosDealer").innerText = calcularPuntos(manoDealer);
+}
+
+/* ========= ACCIONES ========= */
 function pedirCarta() {
     let carta = mazo.pop();
     manoJugador.push(carta);
     mostrarCarta(carta, "cartasJugador");
     actualizarPuntos();
 
-    let puntos = calcularPuntos(manoJugador);
-    if (puntos > 21) {
+    if (calcularPuntos(manoJugador) > 21) {
         document.getElementById("estado").innerText = "Te pasaste. Pierdes.";
     }
 }
@@ -215,7 +259,7 @@ function plantarse() {
     }, 800);
 }
 
-/* ======== GANADOR ======== */
+/* ========= GANADOR ========= */
 function decidirGanador() {
     let jugador = calcularPuntos(manoJugador);
     let dealer = calcularPuntos(manoDealer);
@@ -226,18 +270,18 @@ function decidirGanador() {
     else document.getElementById("estado").innerText = "Empate.";
 }
 
-/* ======== NUEVA PARTIDA ======== */
 function nueva() {
     document.getElementById("estado").innerText = "Repartiendo cartas...";
     repartir();
 }
 
-/* ======== INICIO ======== */
+/* ========= INICIO ========= */
 window.onload = repartir;
 
 </script>
 
 </body>
 </html>
+
 
 

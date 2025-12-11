@@ -1,57 +1,91 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>En Vivo</title>
-    <link rel="stylesheet" href="CSS/style.css">
+  <meta charset="UTF-8">
+  <title>En Vivo — Casino Royal</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .card {
+      border: 2px solid #c17f41;
+      padding: 30px;
+      width: 280px;
+      border-radius: 12px;
+      background: #182f25;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .card:hover {
+      background: #244433;
+      transform: scale(1.03);
+    }
+    .card h2 {
+      margin-top: 0;
+    }
+    .card a.btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #c17f41;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .card a.btn:hover {
+      background: #e5a86f;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">Casino Royal</div>
-</header>
+  <header>
+    <div class="logo" style="font-size:24px; font-weight:bold; margin-bottom: 30px;">Casino Royal</div>
+  </header>
 
-<main style="padding:40px; text-align:center;">
-
+  <main>
     <h1>EN VIVO</h1>
     <p>Disfruta de toda la acción en tiempo real</p>
 
-    <div style="display:flex; justify-content:center; gap:40px; margin-top:40px; flex-wrap:wrap;">
+    <div class="cards-container">
 
-        <!-- Deportes en Vivo -->
-        <div style="border:2px solid #c17f41; padding:30px; width:280px; border-radius:12px;">
-            <h2>⚽ Deportes en Vivo</h2>
-            <p>Apuestas en tiempo real en fútbol, tenis, básquet y más.</p>
-             <a href="https://www.flashscore.es/" target="_blank" style="color:#c17f41; font-weight:bold;">Entrar</a>
+      <!-- Deportes en Vivo -->
+      <a href="https://www.flashscore.es/" target="_blank" class="card-link">
+        <div class="card">
+          <h2>⚽ Deportes en Vivo</h2>
+          <p>Apuestas en tiempo real en fútbol, tenis, básquet y más.</p>
+          <a href="https://www.flashscore.es/" target="_blank" class="btn">Entrar</a>
         </div>
+      </a>
 
-        <!-- Casino en Vivo -->
-        <div style="border:2px solid #c17f41; padding:30px; width:280px; border-radius:12px;">
-            <h2>🎰 Casino en Vivo</h2>
-            <p>Mesa en directo con dealers reales las 24 horas.</p>
-        <a href="https://www.evolution.com/games" target="_blank" style="color:#c17f41; font-weight:bold;">Entrar</a>
+      <!-- Casino en Vivo -->
+      <a href="https://www.evolution.com/games" target="_blank" class="card-link">
+        <div class="card">
+          <h2>🎰 Casino en Vivo</h2>
+          <p>Mesa en directo con dealers reales las 24 horas.</p>
+          <a href="https://www.evolution.com/games" target="_blank" class="btn">Entrar</a>
         </div>
+      </a>
+
     </div>
+
     <br><br>
-    <a href="index.html" style="color:#c17f41; font-size:18px;">⬅ Volver al Casino</a>
-</main>
+    <a href="Index.html" style="color:#c17f41; font-size:18px;">⬅ Volver al Casino</a>
+  </main>
+
 </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>En Vivo</title>
-    <link rel="stylesheet" href="CSS/style.css">
-</head>
-<body>
-
-<header>
-    <div class="logo">Casino Royal</div>
-</header>
-
-
-</html>
->>>>>>> 10bd46aed248ace13d6da72bc0e252eb210fe453
